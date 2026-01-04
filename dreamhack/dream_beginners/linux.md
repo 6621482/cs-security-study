@@ -2,15 +2,16 @@
 
 - `id` : 현재 유저의 유저 ID와 해당 유저가 속해있는 그룹 ID를 출력
   - 리눅스는 권한을 기반으로 파일을 읽고 쓰고 실행할 수 있기 때문에 주로 자신이 해당하는 권한을 가지고 있는지 확인하기 위해 사용
-- `pwd` : 현재 작업 중인 디렉토리의 경로를 출력
+- `pwd` (Print Working Directory) : 현재 작업 중인 디렉토리의 경로를 출력
 - `ls` : 디렉토리의 내용을 출력
+  - `ls ..` : 상위 디렉토리의 파일 목록 출
 - `cd` : 작업 중인 디렉토리 변경
   - 절대 경로 : 루트 디렉토리 /를 시작으로 모든 경로를 적어서 표현하는 경로
   - 상대 경로 : 현재 디렉토리를 기준으로 상위 디렉토리 또는 하위 디렉토리로 뻗어 나가는 경로
     - ex. `cd..` : 현재 디렉토리에서 부모 디렉토리로 이동
     - 현재 디렉토리가 `/home/user/`일 때 `cd..`을 실행하면 `/home`으로 이동
 ```
- user@user-VirtualBox:~$ pwd
+user@user-VirtualBox:~$ pwd
 /home/user
 user@user-VirtualBox:~$ cd /
 user@user-VirtualBox:/$ pwd
@@ -19,11 +20,40 @@ user@user-VirtualBox:/$ cd /home/user
 user@user-VirtualBox:~$ pwd
 /home/user
 user@user-VirtualBox:~$ cd ..
-user@user-VirtualBox:/home$ pwd
+user@user-VirtualBox:/home$ pwd그냥 
 /home
 user@user-VirtualBox:/home$ cd ~
 user@user-VirtualBox:~$ pwd
 /home/user
 user@user-VirtualBox:~$
 ```
-
+- `mkdir` : 디렉토리 생성
+  - ex. `mkdir new_dir`명렁어로 new_dir 디렉토리를 생성하면, 현재 디렉토리에 새롭게 추가됨
+- `touch` : 비어 있는 새로운 파일을 만드는 데 사용
+  - 앞서 생성한 new_dir 디렉토리로 이동 후 `ls -l`을 실행해보면 아무런 파일도 존재하지 않음
+  - 이때 `touch new_file` 명령어를 실행한 후 `ls -l`을 실행하면, new_file 파일이 생성됨
+-`mv` : 파일이나 디렉토리의 위치를 옮기거나 이름을 변경할 때 사용
+  - ex. `mv new_file old_file` : new_file을 old_file로 변경
+  - ex. `mv old_file ..` : old_file을 상위 디렉토리로 이동
+- `rm` : 파일을 삭제하는 명령어
+  - 디렉터리는 `rm`명령어로 삭제되지 않음
+  - `rm -r` : 디렉토리와 그 안의 모든 파일을 재귀적으로 삭제
+- `cat` : 파일의 내용 출력
+  - 형식 : `cat 파일경로` ex. cat /etc/passwd
+- `file` : 파일의 유형 출력
+  - 형식 : `file 파일경로`
+- `echo` : 셸에 유저가 입력한 텍스트를 출력
+  - `echo` 명령문 끝에 `> 파일명`을 이어붙여 실행하면 `파일명`을 이름으로 가지는 파일을 생성하고, `echo` 뒤에 입력한 내용을 파일 내용으로 저장
+```
+user@user-VirtualBox:~/new_dir$ echo "Hello world!"
+Hello world!
+user@user-VirtualBox:~/new_dir$
+```
+- `cp` : 파일을 복사하는 명령어
+  - 디렉토리를 복사할 때는 플래그를 붙인 형태인 `cp -r` 사용
+  - ex. `cp hello world` : hello 파일을 world라는 이름으로 복사
+- `grep` : 전체에서 특정 문자열을 찾을 때 사용
+  - 형식 : `grep 문자열 파일`
+  - 문자열이 포함된 행 전체를 출력
+- `man` : 특정 명렁어의 매뉴얼을 보여주는 명령어
+  - 매뉴얼은 명렁어 사용법, 옵션, 예제 등 유용한 정보를 담고 있음
