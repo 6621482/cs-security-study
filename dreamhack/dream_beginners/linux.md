@@ -1,5 +1,6 @@
-# Linux Basic Commands
+# Linux Fundamentals
 
+## Linux Basic Commands
 - `id` : 현재 유저의 유저 ID와 해당 유저가 속해있는 그룹 ID를 출력
   - 리눅스는 권한을 기반으로 파일을 읽고 쓰고 실행할 수 있기 때문에 주로 자신이 해당하는 권한을 가지고 있는지 확인하기 위해 사용
 - `pwd` (Print Working Directory) : 현재 작업 중인 디렉토리의 경로를 출력
@@ -11,23 +12,6 @@
   - 상대 경로 : 현재 디렉토리를 기준으로 상위 디렉토리 또는 하위 디렉토리로 뻗어 나가는 경로
     - ex. `cd..` : 현재 디렉토리에서 부모 디렉토리로 이동
     - 현재 디렉토리가 `/home/user/`일 때 `cd..`을 실행하면 `/home`으로 이동
-```
-user@user-VirtualBox:~$ pwd
-/home/user
-user@user-VirtualBox:~$ cd /
-user@user-VirtualBox:/$ pwd
-/
-user@user-VirtualBox:/$ cd /home/user
-user@user-VirtualBox:~$ pwd
-/home/user
-user@user-VirtualBox:~$ cd ..
-user@user-VirtualBox:/home$ pwd그냥 
-/home
-user@user-VirtualBox:/home$ cd ~
-user@user-VirtualBox:~$ pwd
-/home/user
-user@user-VirtualBox:~$
-```
 - `mkdir` (Make Directory) : 디렉토리 생성
   - ex. `mkdir new_dir`명렁어로 new_dir 디렉토리를 생성하면, 현재 디렉토리에 새롭게 추가됨
 - `touch` : 비어 있는 새로운 파일을 만드는 데 사용
@@ -45,11 +29,6 @@ user@user-VirtualBox:~$
   - 형식 : `file 파일경로`
 - `echo` : 셸에 유저가 입력한 텍스트를 출력
   - `echo` 명령문 끝에 `> 파일명`을 이어붙여 실행하면 `파일명`을 이름으로 가지는 파일을 생성하고, `echo` 뒤에 입력한 내용을 파일 내용으로 저장
-```
-user@user-VirtualBox:~/new_dir$ echo "Hello world!"
-Hello world!
-user@user-VirtualBox:~/new_dir$
-```
 - `cp` (Copy) : 파일을 복사하는 명령어
   - 디렉토리를 복사할 때는 플래그를 붙인 형태인 `cp -r` 사용
   - ex. `cp hello world` : hello 파일을 world라는 이름으로 복사
@@ -69,8 +48,141 @@ user@user-VirtualBox:~/new_dir$
     - `curl`은 HTTP 요청을 통해 데이터를 서버로 전송할 수 있음
     - 쉘에서는 명령어 실행 결과를 문자열로 치환하는 기능이 있음
     - 이 두 기능을 결합하면 명령어 실행 결과를 HTTP 요청의 body에 포함시켜 전송 가능
-      - 이때 curl이 명령을 실행하는 것이 아니라, 쉘이 먼저 명령을 실행하고, 그 결과를 curl에 전
+      - 이때 curl이 명령을 실행하는 것이 아니라, 쉘이 먼저 명령을 실행하고, 그 결과를 curl에 전송
+- **와일드카드(wildcards)** : 리눅스에서 임의의 다른 문자를 나타낼 수 있는 특수 문자
+  - 명렁어를 다른 문자열로 대체하기 위해 사용
+  - **?** :
+    - a-z, 0-9 범위 내 임의의 1개 문자로 대체
+    - 예시
+      ```
+      user@user-VirtualBox:~/new_dir$ ls -l
+      total 8
+      -rw-rw-r-- 1 user user 13 12월  2 13:05 hello
+      -rw-rw-r-- 1 user user 13 12월  2 13:08 world
+      user@user-VirtualBox:~/new_dir$ cat he?lo
+      Hello world!
+      user@user-VirtualBox:~/new_dir$
+      ```
+  - __*__ :
+    - a-z, 0-9 범위 내 임의의 0개 이상 문자로 대체
+    - 예시
+      ```
+      user@user-VirtualBox:~/new_dir$ cat h*
+      Hello world!
+      user@user-VirtualBox:~/new_dir$
+      ```
+  - **[]**
+    - [문자1-문자2] 또는 [문자1, 문자2, ...] 형태로 범위를 지정
+    - 범위 내 모든 문자로 대체 가능
+    - 예시
+      ```
+      user@user-VirtualBox:~/new_dir$ ls -l
+      total 8
+      -rw-rw-r-- 1 user user 13 12월  2 13:05 hello
+      -rw-rw-r-- 1 user user 13 12월  2 13:08 world
+      user@user-VirtualBox:~/new_dir$ touch test1 test2 test3
+      user@user-VirtualBox:~/new_dir$ ls -l
+      total 8
+      -rw-rw-r-- 1 user user 13 12월  2 13:05 hello
+      -rw-rw-r-- 1 user user  0 12월  2 13:10 test1
+      -rw-rw-r-- 1 user user  0 12월  2 13:10 test2
+      -rw-rw-r-- 1 user user  0 12월  2 13:10 test3
+      -rw-rw-r-- 1 user user 13 12월  2 13:08 world
+      user@user-VirtualBox:~/new_dir$ ls test[0-9]
+      test1  test2  test3
+      user@user-VirtualBox:~/new_dir$
+      ```
+- **리다이렉션(redirection)** : 모니터에 나타나는 표준 출력 또는 키보드로 입력하는 표준 입력을 다른 곳으로 변경하는 작업
+  - 어떤 명령어의 결과를 파일로 저장하거나, 다른 명령어의 입력으로 전달하는 형태로 리다이렉션
+  - **명령어 > 파일** : 명령어 표준 출력을 파일로 변경
+    - 파일이 없으면 새로 만들고, 있으면 덮어씀
+    - 예시 : `ls test[0-9]`명령어 결과를 world 파일에 씀
+      ```
+      user@user-VirtualBox:~/new_dir$ ls test[0-9]
+      test1  test2  test3
+      user@user-VirtualBox:~/new_dir$ ls test[0-9] > world
+      user@user-VirtualBox:~/new_dir$ cat world
+      test1
+      test2
+      test3
+      user@user-VirtualBox:~/new_dir$
+      ```
+  - **명령어 >> 파일** : 명령어 표준 출력을 파일로 변경
+    - 파일이 없으며 새로 만들고, 있으면 이어서 씀
+    - 예시 : `cat hello`명령어 결과를 world 파일에 씀
+      '''
+      user@user-VirtualBox:~/new_dir$ cat hello
+      hello
+      user@user-VirtualBox:~/new_dir$ cat hello >> world
+      user@user-VirtualBox:~/new_dir$ cat world
+      test1
+      test2
+      test3
+      hello
+      user@user-VirtualBox:~/new_dir$
+      ```
+  - **명령어 < 파일** : 명령어 표준 입력을 파일로 변경
+    - 파일로부터 표준 입력을 받아 명령어 수행
+    - 예시 :
+      ```
+      user@user-VirtualBox:~/new_dir$ cat world
+      test1
+      test2
+      test3
+      hello
+      user@user-VirtualBox:~/new_dir$ grep test < world
+      test1
+      test2
+      test3
+      user@user-VirtualBox:~/new_dir$
+      ```
+  - **파이프(pipe)** : 명령어 결과 표준 출력을 다른 명령어의 표준 입력으로 보낼 때 사용
+    - 파이프틑 문자 `|`로 표현
+    - ex. `ls -l'명령 결과에서 hello가 포함된 행을 찾아 출력 : `ls -l | grep hello`
 
+## 권한
+### 유저(User)와 그룹(Group)
+- 유저 : 이름과 고유한 사용자 ID(UID)를 가지고 있음
+- 그룹 : 여러 유저가 속할 수 있는 그룹으로, 그룹 이름과 고유한 그룹 ID(GID)를 가지고 있음
+- 파일이나 디렉토리에 유저가 접근하면 유저의 UID와 해당 유저가 속한 그룹의 GID를 확인하여 정당한 권한을 가지고 있는지를 판단해 접근을 제어
+- `cat 유저정보텍스트파일` : 각 사용자의 이름, 사용자 ID, 속해있는 그룹 ID 등의 정보 포함
+- `cat 그룹정보텍스트파일` : 각 그룹의 이름, 그룹 ID, 그룹에 속한 유저 목록 등의 정보 포함
+### 파일 및 디렉토리 권한
+- 각 파일과 디렉토리는 소유자(owner)와 소유 그룹(group)을 가지고 있음
+  - 소유자 : 파일 또는 디렉토리의 권한을 수정할 수 있는 능력을 가짐
+    - 소유자 또는 소유 그룹에 포함된 유저가 해당 파일 또는 디렉토리에 대해서 얼마만큼 접근 권한을 가질 것인지 설정 가능
+      - **읽기(Read)** : 파일 또는 디렉토리의 내용을 볼 수 있게 허용
+      - **쓰기(Write)** : 파일 또는 디렉토리의 내용을 수정하거나 삭제하는 것을 허용
+      - **실행(Execute)** : 파일이 프로그램인 경우 실행할 수 있게 허용 / 디렉토리의 내용에 접근할 수 있도록 허용
+- 파일이나 디렉토리의 권한을 보기 위해 `ls -l` 사용
+  - ex. `drwxrwxr-x 2 user user 4096 12월 2 13:38 dir`
+    - 첫 번째 열 : 권한 플래그 `drwxrwxr-x`
+      - d rwx rwx r-x
+        - 첫 번째 문자 : 파일의 타입 (`d` 디렉토리, `-` 일반 파일, `l` 바로가기)
+        - 다음 문자들은 권한 플래그 (소유자의 권한, 소유 그룹에 포함된 유저들의 권한, 나머지 유저들의 권한)
+        - r : 읽기 권한 / w : 쓰기 권한 / x : 실행 권한
+        - 권한 나타내는 3개 문자를 2진수 또는 10진수로 표현 가능 (rwx = 111, rw- = 110)
+    - 세 번째 열 : 소유자 `user`
+    - 네 번째 열 : 소유 그룹 `user`
+  - ex. -rwxrw-r-- 1 user user 13 12월 2 13:08 world`
+    - 소유자 `user`, 소유 그룹 `user`
+    - 파일 타입을 나타내는 첫 문자가 `-`이므로 world는 일반 파일
+    - 소유자 권한 프래그 = rwx : `user`유저는 world 파일을 읽고 쓰고 실행 가능
+    - 소유 그룹 권한 플래그 = rw- : `user`그룹에 속한 유저들은 world 파일을 읽고 쓸 수 있음. 실행 X
+    - 나머지 유저 플래그 = r-- : 나머지 유저들은 world 파일을 읽을 수만 있음. 쓰기 X 실행 X
+- `chmod` : 파일 권한을 변경하는 명령어
+  - `root`유저 또는 파일의 소유자만 실행 가능
+    - root 유저 : 리눅스에서 모든 권한을 가진 최고 관리자 (권한 검사 안 해도 모든 파일 읽기, 쓰기, 실행 전부 가능)
+  - 형식 : `chmod 권한 파일명`
+  - ex. 기존 권한 : ---------- -> `chmod 774 hello` -> -rwxrwxr--
+  - `chmod g+(rwx) 파일명` : 소유 그룹에 실행 권한 부여
+  - `chmod g-(rwx) 파일명` : 소유 그룹에 실행 권한 제거
+- `chown` : 파일 소유자 또는 소유 그룹을 변경하는 명령어
+  - `root`유저만 실행 가능
+    - 형식 : `chown 사용자명[.그룹명] 파일명`
+    - 소유 그룹만 변경하고 싶은 경우 `chgrp`명령어 사용
+    - ex. `sudo chown root hello` : 소유자를 user에서 root로 변경
+      - 명령어를 root 권한으로 실행하려면 맨 앞에 `sudo`를 붙여
 
 ## 추가 내용
 ### HTTP 통신
