@@ -9,7 +9,8 @@
   - 상대 경로 : 현재 디렉토리를 기준으로 상위 디렉토리 또는 하위 디렉토리로 뻗어 나가는 경로
     - ex. `cd..` : 현재 디렉토리에서 부모 디렉토리로 이동
     - 현재 디렉토리가 `/home/user/`일 때 `cd..`을 실행하면 `/home`으로 이동
-  ```user@user-VirtualBox:~$ pwd
+```
+ user@user-VirtualBox:~$ pwd
 /home/user
 user@user-VirtualBox:~$ cd /
 user@user-VirtualBox:/$ pwd
@@ -23,6 +24,6 @@ user@user-VirtualBox:/home$ pwd
 user@user-VirtualBox:/home$ cd ~
 user@user-VirtualBox:~$ pwd
 /home/user
-user@user-VirtualBox:~$```
-
+user@user-VirtualBox:~$
+```
 
