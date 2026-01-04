@@ -81,11 +81,13 @@ user@user-VirtualBox:~/new_dir$
     - 빈 줄 : 헤더와 바디 사이의 경계선
     - 바디 : 진짜 내용
     - 실제 HTTP 형태 :
-      > POST /login HTTP/1.1
-      > Host: example.com
-      > Content-Type: application/x-www-form-urlencoded
-      >
-      > id=admin&pw=1234
+      ```
+      POST /login HTTP/1.1
+      Host: example.com
+      Content-Type: application/x-www-form-urlencoded
+      
+      id=admin&pw=1234
+      ```
   - 응답 : 상태라인 | 응답헤더 | (빈 줄) | 응답바디
     - 상태라인 : 서버가 요청 결과가 어땠는지를 알려주는 첫 줄
       - 형식 : HTTP/VERSION STATUS_CODE STATUS_MESSAGE
@@ -95,11 +97,13 @@ user@user-VirtualBox:~/new_dir$
         - `OK` : 성공했다는 설명
       - ex. HTTP/1.1 404 Not Found : 없다는 의미
     - 실제 예시 :
-      > HTTP/1.1 200 OK
-      > Content-Type: text/html
-      > Set-Cookie: session=abcd
-      >
-      > <html>...</html>
+      ```
+      HTTP/1.1 200 OK
+      Content-Type: text/html
+      Set-Cookie: session=abcd
+      
+      <html>...</html>
+      ```
   - 브라우저는 자동으로 헤더 숨기고 쿠키 관리하고 화면만 보여줌
     - 쿠키 : 서버가 클라이언트에게 저장하라고 주는 작은 데이터 (비유 : 클라이언트가 들고 다니는 신분증)
       - 저장 위치 : 브라우저
