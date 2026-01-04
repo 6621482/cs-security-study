@@ -60,9 +60,9 @@ user@user-VirtualBox:~/new_dir$
 - `curl` (client URL) : 서버에 데이터를 보내거나 서버로부터 데이터를 받는 전송 명령어
   - 형식 : `curl [옵션] URL`
     - 옵션 1) `-o file` : 전송 받은 데이터를 파일에 저장
-    - 옵션 2) `-i` : 결과 값에 HTTP 응답 헤더를 포함
+    - 옵션 2) `-i` : 결과 값에 HTTP 응답 헤더를 포함 (응답 헤더 + 바디)
     - 옵션 3) `X "method"` : HTTP 요청 메소드를 지정
-    - 옵션 4) `-d "key=value"` : HTTP POST 메소드로 데이터를 전송
+    - 옵션 4) `-d "key=value"` : HTTP POST 메소드로 데이터를 전송 (POST 요청 + 데이터 전송)
   - HTTP, HTTPS, FTP 등 다양한 프로토콜 지원
   - curl을 이용한 명령어 실행 결과 전송
  
@@ -73,14 +73,57 @@ user@user-VirtualBox:~/new_dir$
   - 기본 구조 : [요청(Request)] -> [응답(Response)]
   - 요청 : 요청라인 | 요청헤더 | (빈 줄) | 요청바디
     - 요청 메서드 : GET (정보 얻음) & POST (정보 보냄)
+    - 요청라인 : 서버에게 무엇을 해달라고 요청하는지 한 줄로 적은 것
+      - 형식 : METHOD PATH HTTP/VERSION
+      - ex. GET /index.html HTTP/1.1 -> 이 파일을 HTTP로 가져와라
+      - ex. POST /login HTTP/1.1 -> /login 경로로 데이터를 보낼 거다
     - 헤더 : 부가정보 (형식, 데이터 길이 등)
+    - 빈 줄 : 헤더와 바디 사이의 경계선
     - 바디 : 진짜 내용
-    > 실제 형태 :
-    > POST /login HTTP/1.1
-    > Host: example.com
-    > Content-Type: application/x-www-form-urlencoded
-    >
-    > id=admin&pw=1234
-
-  
+    - 실제 HTTP 형태 :
+      > POST /login HTTP/1.1
+      > Host: example.com
+      > Content-Type: application/x-www-form-urlencoded
+      >
+      > id=admin&pw=1234
   - 응답 : 상태라인 | 응답헤더 | (빈 줄) | 응답바디
+    - 상태라인 : 서버가 요청 결과가 어땠는지를 알려주는 첫 줄
+      - 형식 : HTTP/VERSION STATUS_CODE STATUS_MESSAGE
+      - ex. HTTP/1.1 200 OK
+        - `HTTP/1.1` : HTTP 1.1로 응답
+        - `200` : 성공
+        - `OK` : 성공했다는 설명
+      - ex. HTTP/1.1 404 Not Found : 없다는 의미
+    - 실제 예시 :
+      > HTTP/1.1 200 OK
+      > Content-Type: text/html
+      > Set-Cookie: session=abcd
+      >
+      > <html>...</html>
+  - 브라우저는 자동으로 헤더 숨기고 쿠키 관리하고 화면만 보여줌
+    - 쿠키 : 서버가 클라이언트에게 저장하라고 주는 작은 데이터 (비유 : 클라이언트가 들고 다니는 신분증)
+      - 저장 위치 : 브라우저
+      - 형태 : key=value
+      - 자동으로 요청에 포함됨
+      - 실제 형태 :
+        - 서버 -> 클라이언트 (응답) : Set-Cookie: sessionid=ABC123
+        - 클라이언트 -> 서버 (다음 요청) : Cookie: sessionid=ABC123
+    - 세션 : 서버에 저장되는 사용자 상태 정보
+      - 저장 위치 : 서버 메모리 / DB
+      - 로그인 정보, 권한 정보 등
+      - 클라이언트는 세션 내용을 모르고, 세션 자체는 서버에만 있음
+    - 로그인 전체 흐름
+      - (1) 로그인 요청
+        ```
+        POST /login
+        id=admin&pw=1234
+        ```
+      - (2) 서버
+        - 로그인 성공, 세션 생성, 세션 ID 발급
+      - (3) 서버 응답
+        `set-Cookie: sessionid=ABC123`
+      - (4) 이후 모든 요청
+        `Cookie : sessionid=ABC123`
+      - (5) 서버는
+        - ABC123 -> admin이네
+  - `curl`은 요청/응답을 그대로 보여줌
