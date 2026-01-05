@@ -65,7 +65,7 @@
     - 범위 내 모든 문자로 대체 가능
     - ex. 현재 디렉토리에 파일이 `log1.txt  log2.txt  log3.txt  logA.txt` 이렇게 있다고 가정
       - `ls log[1-3].txt` 실행
-      - 결과 : log1.txt  log2.txt  log3.txt`
+      - 결과 : `log1.txt  log2.txt  log3.txt`
       - `ls log[13A].txt` 실행
       - 결과 : `log1.txt  log3.txt  logA.txt`
 - **리다이렉션(redirection)** : 모니터에 나타나는 표준 출력 또는 키보드로 입력하는 표준 입력을 다른 곳으로 변경하는 작업
