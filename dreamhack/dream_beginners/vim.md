@@ -18,8 +18,8 @@ graph TD
 
         Normal -->|i, o, a...| Insert
         Insert -->|esc| Normal
-        Normal -->|:| Command
-        Command -->|esc| Normal
+        Normal -->|esc| Command
+        Command -->|:| Normal
     end
 
     %% 모든 모드 스타일 통일: 진한 회색(#e0e0e0)
