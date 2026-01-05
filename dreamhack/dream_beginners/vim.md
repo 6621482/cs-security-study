@@ -4,7 +4,7 @@
 ```mermaid
 graph TD
     %% 터미널 실행 노드: 흰색 배경, 실선 테두리
-    Start(터미널에서 Vim 실행) -->|vi| Normal
+    Start(터미널에서 Vim 실행) -->|vim| Normal
     style Start fill:#fff,stroke:#333,stroke-width:1px,stroke-dasharray:none
 
     subgraph Vim [Vim 에디터 내부]
