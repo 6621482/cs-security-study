@@ -17,16 +17,7 @@
 - `touch` : 비어 있는 새로운 파일을 만드는 데 사용
   - 앞서 생성한 new_dir 디렉토리로 이동 후 `ls -l`을 실행해보면 아무런 파일도 존재하지 않음
   - 이때 `touch new_file` 명령어를 실행한 후 `ls -l`을 실행하면, new_file 파일이 생성됨
--`mv` (Move) : 파일이나 디렉토리의 위치를 옮기거나 이름을 변경할 때 사용
-  - ex. `mv new_file old_file` : new_file을 old_file로 변경
-  - ex. `mv old_file ..` : old_file을 상위 디렉토리로 이동
-- `rm` (Remove) : 파일을 삭제하는 명령어
-  - 디렉터리는 `rm`명령어로 삭제되지 않음
-  - `rm -r` : 디렉토리와 그 안의 모든 파일을 재귀적으로 삭제
-- `cat` : 파일의 내용 출력
-  - 형식 : `cat 파일경로` ex. cat /etc/passwd
-- `file` : 파일의 유형 출력
-  - 형식 : `file 파일경로`
+-`mv` (Move) : 파일이나 디렉토리의 위치를 옮기거나 이름을 변장
 - **와일드카드(wildcards)** : 리눅스에서 임의의 다른 문자를 나타낼 수 있는 특수 문자
   - **?** :
     - a-z, 0-9 범위 내 임의의 1개 문자로 대체
@@ -53,7 +44,7 @@
   - **명령어 >> 파일** : 명령어 표준 출력을 파일로 변경
     - 파일이 없으며 새로 만들고, 있으면 이어서 씀
     - 예시 : `cat hello`명령어 결과를 world 파일에 씀
-      '''
+      ```
       user@user-VirtualBox:~/new_dir$ cat hello
       hello
       user@user-VirtualBox:~/new_dir$ cat hello >> world
