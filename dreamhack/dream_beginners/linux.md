@@ -26,32 +26,7 @@
 - `cat` : 파일의 내용 출력
   - 형식 : `cat 파일경로` ex. cat /etc/passwd
 - `file` : 파일의 유형 출력
-  - 형식 : `file 파일경로`
-- `echo` : 셸에 유저가 입력한 텍스트를 출력
-  - `echo` 명령문 끝에 `> 파일명`을 이어붙여 실행하면 `파일명`을 이름으로 가지는 파일을 생성하고, `echo` 뒤에 입력한 내용을 파일 내용으로 저장
-- `cp` (Copy) : 파일을 복사하는 명령어
-  - 디렉토리를 복사할 때는 플래그를 붙인 형태인 `cp -r` 사용
-  - ex. `cp hello world` : hello 파일을 world라는 이름으로 복사
-- `grep` : 전체에서 특정 문자열을 찾을 때 사용
-  - 형식 : `grep 문자열 파일`
-  - 문자열이 포함된 행 전체를 출력
-- `man` (Manual) : 특정 명렁어의 매뉴얼을 보여주는 명령어
-  - 매뉴얼은 명렁어 사용법, 옵션, 예제 등 유용한 정보를 담고 있음
-- `curl` (client URL) : 서버에 데이터를 보내거나 서버로부터 데이터를 받는 전송 명령어
-  - 형식 : `curl [옵션] URL`
-    - 옵션 1) `-o file` : 전송 받은 데이터를 파일에 저장
-    - 옵션 2) `-i` : 결과 값에 HTTP 응답 헤더를 포함 (응답 헤더 + 바디)
-    - 옵션 3) `X "method"` : HTTP 요청 메소드를 지정
-    - 옵션 4) `-d "key=value"` : HTTP POST 메소드로 데이터를 전송 (POST 요청 + 데이터 전송)
-  - HTTP, HTTPS, FTP 등 다양한 프로토콜 지원
-  - curl을 이용한 명령어 실행 결과 전송
-    - `curl`은 HTTP 요청을 통해 데이터를 서버로 전송할 수 있음
-    - 쉘에서는 명령어 실행 결과를 문자열로 치환하는 기능이 있음
-    - 이 두 기능을 결합하면 명령어 실행 결과를 HTTP 요청의 body에 포함시켜 전송 가능
-      - 이때 curl이 명령을 실행하는 것이 아니라, 쉘이 먼저 명령을 실행하고, 그 결과를 curl에 전송
-- **와일드카드(wildcards)** : 리눅스에서 임의의 다른 문자를 나타낼 수 있는 특수 문자
-  - 명렁어를 다른 문자열로 대체하기 위해 사용
-  - **?** :
+  - 형식 : `령  -`  - **?** :
     - a-z, 0-9 범위 내 임의의 1개 문자로 대체
     - 예시
       ```
@@ -77,8 +52,7 @@
     - 예시
       ```
       user@user-VirtualBox:~/new_dir$ ls -l
-      total 8
-      -rw-rw-r-- 1 user user 13 12월  2 13:05 hello
+      total 8d      -rw-rw-r-- 1 user user 13 12월  2 13:05 hello
       -rw-rw-r-- 1 user user 13 12월  2 13:08 world
       user@user-VirtualBox:~/new_dir$ touch test1 test2 test3
       user@user-VirtualBox:~/new_dir$ ls -l
