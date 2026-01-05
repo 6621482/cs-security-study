@@ -52,11 +52,22 @@
 - **와일드카드(wildcards)** : 리눅스에서 임의의 다른 문자를 나타낼 수 있는 특수 문자
   - **?** :
     - a-z, 0-9 범위 내 임의의 1개 문자로 대체
+    - ex. 현재 디렉토리에 파일이 `file1.txt  file2.txt  fileA.txt  file10.txt` 이렇게 있다고 가정
+      - `ls file?.txt` 실행
+      - 결과 : `file1.txt  file2.txt  fileA.txt`
   - __*__ :
     - a-z, 0-9 범위 내 임의의 0개 이상 문자로 대체
+    - ex. 현재 디렉토리에 파일이 `file1.txt  file2.txt  fileA.txt  file10.txt` 이렇게 있다고 가정
+      - `ls file*.txt` 실행
+      - 결과 : `file1.txt  file2.txt  fileA.txt  file10.txt`
   - **[]**
     - [문자1-문자2] 또는 [문자1, 문자2, ...] 형태로 범위를 지정
     - 범위 내 모든 문자로 대체 가능
+    - ex. 현재 디렉토리에 파일이 `log1.txt  log2.txt  log3.txt  logA.txt` 이렇게 있다고 가정
+      - `ls log[1-3].txt` 실행
+      - 결과 : log1.txt  log2.txt  log3.txt`
+      - `ls log[13A].txt` 실행
+      - 결과 : `log1.txt  log3.txt  logA.txt`
 - **리다이렉션(redirection)** : 모니터에 나타나는 표준 출력 또는 키보드로 입력하는 표준 입력을 다른 곳으로 변경하는 작업
   - 어떤 명령어의 결과를 파일로 저장하거나, 다른 명령어의 입력으로 전달하는 형태로 리다이렉션
   - **명령어 > 파일** : 명령어 표준 출력을 파일로 변경
