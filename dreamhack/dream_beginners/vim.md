@@ -3,7 +3,6 @@
 ## Vim Modes
 ```mermaid
 graph TD
-    %% 노드 정의
     Start(터미널에서 Vim 실행) -->|vi| Normal
 
     subgraph Vim [Vim 에디터 내부]
@@ -12,16 +11,15 @@ graph TD
         Insert[Insert Mode<br>입력 모드]
         Command[Command Mode<br>명령 모드]
 
-        %% 흐름 연결
         Normal -->|i, o, a...| Insert
         Insert -->|esc| Normal
         Normal -->|:| Command
         Command -->|esc| Normal
     end
 
-    %% 가장 기본적인 스타일 적용 (에러 안 남)
-    style Normal fill:#6c63ff,stroke:#333,stroke-width:2px,color:#fff
-    style Insert fill:#758bfd,stroke:#333,color:#fff
-    style Command fill:#758bfd,stroke:#333,color:#fff
-    style Start fill:#fff,stroke:#333,stroke-dasharray: 5 5
+    %% 스타일 설정: 회색 배경, 얇은 테두리(1px), 검은 글씨
+    style Normal fill:#e0e0e0,stroke:#333,stroke-width:1px,color:#000
+    style Insert fill:#f5f5f5,stroke:#333,stroke-width:1px,color:#000
+    style Command fill:#f5f5f5,stroke:#333,stroke-width:1px,color:#000
+    style Start fill:#fff,stroke:#333,stroke-dasharray: 5 5,stroke-width:1px
 
