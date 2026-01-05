@@ -17,7 +17,7 @@
 - `touch` : 비어 있는 새로운 파일을 만드는 데 사용
   - 앞서 생성한 new_dir 디렉토리로 이동 후 `ls -l`을 실행해보면 아무런 파일도 존재하지 않음
   - 이때 `touch new_file` 명령어를 실행한 후 `ls -l`을 실행하면, new_file 파일이 생성됨
--`mv` (Move) : 파일이나 디렉토리의 위치를 옮기거나 이름을 변경할 때 사용
+- `mv` (Move) : 파일이나 디렉토리의 위치를 옮기거나 이름을 변경할 때 사용
   - ex. `mv new_file old_file` : new_file을 old_file로 변경
   - ex. `mv old_file ..` : old_file을 상위 디렉토리로 이동
 - `rm` (Remove) : 파일을 삭제하는 명령어
