@@ -19,4 +19,4 @@
 - 패턴 : 문자 / 문자열
   - 의미 : 해당 문자 혹은 문자열과 매치
   - 예시
-    - dream -> hello <U>dream</U> 
+    - dream -> hello <mark>dream</mark> 
