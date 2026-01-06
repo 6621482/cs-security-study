@@ -26,6 +26,7 @@ graph TD
     style Normal fill:#e0e0e0,stroke:#333,stroke-width:1px,color:#000
     style Insert fill:#e0e0e0,stroke:#333,stroke-width:1px,color:#000
     style Command fill:#e0e0e0,stroke:#333,stroke-width:1px,color:#000
+```
 
 ## Normal Mode (일반 모드)
 - 처음 실행하면 일반 모드로 시작
