@@ -89,16 +89,16 @@
 - `{n}`
   - 의미 : 앞에 나온 문자가 정확히 n개이면 매치
   - 예시
-    - a{3} -> mark>aaa</mark>, aa, aaaa
+    - a{3} -> <mark>aaa</mark>, aa, aaaa
 - `{n,}`
   - 의미 : 앞에 나온 문자가 n개 이상이면 매치
   - 예시
-    - a{2,} -> mark>aa</mark>, mark>aaa</mark>, mark>aaaa</mark>, a
+    - a{2,} -> <mark>aa</mark>, <mark>aaa</mark>, <mark>aaaa</mark>, a
 - {n1,n2}
   - 의미 : 앞에 나온 문자가 n1개 이상, n2개 이하면 매치
   - 주의 : 쉼표 뒤에 공백을 넣으면 안
   - 예시
-    - a{2,3} -> mark>aa</mark>, mark>aaa</mark>, aaaa, a
+    - a{2,3} -> <mark>aa</mark>, <mark>aaa</mark>, aaaa, a
       
 - **정규 표현식 수량자의 성격**
   - 기본 : **탐욕적(greedy) 수량자**
@@ -111,8 +111,8 @@
 - `()`
   - 의미 : ()로 감싼 부분을 그룹화하여 하나의 문자로 여김
   - 예시
-    - dog+ -> mark>dog</mark>, mark>doggggg</mark>, dogdog
-    - (dog)+ -> mark>dog</mark>, mark>dogdog</mark>
+    - dog+ -> <mark>dog</mark>, <mark>doggggg</mark>, dogdog
+    - (dog)+ -> <mark>dog</mark>, <mark>dogdog</mark>
 
 ## 정규 표현식 플래그
 - 검색의 옵션을 지정하는 역할
