@@ -136,14 +136,14 @@
     start line 2
     start line 3
     ```
-    - /^start/g
-      <mark>start</mark> line 1
-      start line 2
-      start line 3
-    - /^start/gm
-      <mark>start</mark> line 1
-      <mark>start</mark> line 2
-      <mark>start</mark> line 3
+    - /^start/g  
+      <mark>start</mark> line 1  
+      start line 2  
+      start line 3  
+    - /^start/gm  
+      <mark>start</mark> line 1  
+      <mark>start</mark> line 2  
+      <mark>start</mark> line 3  
 - `s`
   - 의미 : single lind(dotall) (메타문자 `.`가 개행문자도 포함)
   - 예시
