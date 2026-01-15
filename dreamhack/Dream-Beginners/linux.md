@@ -152,7 +152,7 @@
         - 권한 나타내는 3개 문자를 2진수 또는 10진수로 표현 가능 (rwx = 111, rw- = 110)
     - 세 번째 열 : 소유자 `user`
     - 네 번째 열 : 소유 그룹 `user`
-  - ex. -rwxrw-r-- 1 user user 13 12월 2 13:08 world`
+  - ex. `-rwxrw-r-- 1 user user 13 12월 2 13:08 world`
     - 소유자 `user`, 소유 그룹 `user`
     - 파일 타입을 나타내는 첫 문자가 `-`이므로 world는 일반 파일
     - 소유자 권한 프래그 = rwx : `user`유저는 world 파일을 읽고 쓰고 실행 가능
