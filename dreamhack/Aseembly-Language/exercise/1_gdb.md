@@ -18,7 +18,7 @@ flag2 : flag_2()의 실행 결과 (실행 조건 : 특정 주소에서의 rax ==
 ### 접근 과정
 1. flag_1 함수 시작에 중단점 설정
 2. 함수 끝까지 실행
-3. context 통해 리턴 직후 rax 값 확인
+3. context 통해 리턴 직후 rax 값 확인 (context창 또는 info registers 활용) 
 4. flag_2 직전 주소에서 rax == 0 조건 확인 
 5. 해당 시점에 중단점 걸고 rax 값 조작 
 6. flag_2 함수 실행
