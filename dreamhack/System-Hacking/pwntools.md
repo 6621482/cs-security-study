@@ -73,10 +73,10 @@
   - 개행(\n)이 자동으로 붙지 않음 
   - 반환값 없음
   - 그 외 send 계열 함수들
-    - `sendline(<data>)` : <data> 뒤에 b"\n"을 자동으로 붙여 전송함
-    - `sendafter(<delim>, <data>, [timeout])` : 먼저 <delim>이 나올 때까지 recvuntil로 기다린 뒤, <data>를 전송함
+    - `sendline(<data>)` : \<data\> 뒤에 b"\n"을 자동으로 붙여 전송함
+    - `sendafter(<delim>, <data>, [timeout])` : 먼저 \<delim\>이 나올 때까지 recvuntil로 기다린 뒤, \<data\>를 전송함
       - 내부적으로 `recvuntil(delim)`, `send(data)`를 실행 
-    - `sendlineafter(<delim>, <data>, [timeout])` : 먼저 <delim>이 나올 때까지 기다린 뒤, <data> + b"\n"을 전송함
+    - `sendlineafter(<delim>, <data>, [timeout])` : 먼저 \<delim\>이 나올 때까지 기다린 뒤, \<data\> + b"\n"을 전송함
   - 예시
     ```python
     from pwn import*
