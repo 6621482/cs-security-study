@@ -38,7 +38,7 @@
     r = remote("test.com", 1337)
     ```
 
-- `ssh(user=None, host=None, port=22, password=None, key=None, keyfile=None, timeout=None, **kwargs) : SSH 서버에 접속하여 통신하기 위한 함수 
+- `ssh(user=None, host=None, port=22, password=None, key=None, keyfile=None, timeout=None, **kwargs)` : SSH 서버에 접속하여 통신하기 위한 함수 
   - 인자
     - user : SSH 접속할 계정 이름
     - host : 접속 대상 IP 또는 도메인
