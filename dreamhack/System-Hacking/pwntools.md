@@ -62,7 +62,7 @@
     - `recvline([keepends], [timeout])` : \n이 나올 때까지 수신함
     - `recvn(<numb>, [timeout])` : numb 바이트를 받을 때까지 블로킹
       - 정확히 numb 바이트를 받지 못하면 계속 기다림
-    - `recvuntil(<delim>, [drop], [timeout])` : delim이 나올 때까지 계속 수신함
+    - `recvuntil(<delim>, [drop], [timeout])` : delim이 나올 때까지 계속 수신함 (delim도 포함)
       - ex. `data = p.recvuntil(b"hi")` : p가 b"hi"를 출력할 때까지 데이터를 수신하여 data에 저장
         - b"" : 바이털 리터럴 표기 
     - `recvall([timeout])` : EOF까지 전부 수신 
