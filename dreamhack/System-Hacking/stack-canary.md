@@ -29,7 +29,7 @@
     ```
     catch syscall arch_prctl
     run
-    ``
+    ```
     - arch_prctl 시스템콜이 호출되는 순간에 멈추게 함 (FS base(TLS base)는 arch_prctl로 설정되기 때문)
   - (2) `init_tls()`에서 멈춤
     ```
