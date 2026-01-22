@@ -108,3 +108,7 @@
   | ----------------- | -------------------- | ------------- |
   | `%p`, `%lx`, `%x`, `%d` | `b"0x7ffff7..."`     | `int(...,16)` |
   | `%s`              | `b"\x7a\xb1\xc3..."` | `u64()`       |
+
+**Q. ACE, RCE란 무엇인가?**  
+- ACE(Arbitrary Code Execution) : 임의 코드 실행
+- RCE(Remote Code Excution) : 원격 코드 실행 
