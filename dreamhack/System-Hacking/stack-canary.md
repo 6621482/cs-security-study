@@ -52,11 +52,16 @@
 - (2) continue 후 멈춘 위치 : `security_init`
   ```
   Old value = 0
-  New value = 2005351680
+  New value = 2005351680             // 10진수로 출력한 카나리
   security_init () at rtld.c:870
   ```
   - 스택 카나리는 security_init()에서 처음 설정됨
-  - 카나리의 첫 바이트는 `0x00`임 
+  - 카나리의 첫 바이트는 `0x00`임
+- (3) 카나리값 조회 (확인용)
+  ```
+  x/gx 0x7ffff7f9b740+0x28
+  0x7ffff7f9b768: 0xcb4c69e75f528700
+  ```
 
   ### 카나리 우회
   - **무차별 대입(Brute Force)** : 모든 후보를 순서대로 전부 시도하는 방식
