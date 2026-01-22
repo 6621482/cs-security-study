@@ -124,6 +124,7 @@ SEARCH_DIR("=/usr/x86_64-linux-gnu/lib")
  - **PLT(Procedure Linkage Table)** : 외부 라이브러리 함수를 호출하기 위해 사용하는 중간 점프 테이블 
    - 프로그래머가 코드에서 printf를 호출하면, 실제로는 바로 라이브러리의 printf로 가는 것이 아니라 **printf@PLT**라는 PLT 내부의 함수를 먼저 호출함
    - PLT는 GOT를 참조하여 실제 주소로 점프하는 역할
+   - rumtime resolve : 라이브러리 함수 호출 시, 함수의 이름을 바탕으로 라이브러리에서 심볼을 탐색하고, 해당 함수의 정의를 발견하면 그 주소로 실행 흐름을 옮기는 전 과정 
 - **GOT(Global Offset Table)** : 외부 함수의 실제 메로리 주소를 저장해 두는 테이블
   - 라이브러리 내에 있는 함수의 실제 메모리 주소를 저장함
   - 처음에는 비어있거나 PLT내부를 가리킴 (ex. `GOT[puts] = 아직 모르는 상태`)
@@ -137,7 +138,7 @@ SEARCH_DIR("=/usr/x86_64-linux-gnu/lib")
      ↓
     GOT[puts] (비어 있음)
      ↓
-    동적 로더
+    동적 로더가 호출됨 
      ↓
     libc의 puts 주소 발견
      ↓
