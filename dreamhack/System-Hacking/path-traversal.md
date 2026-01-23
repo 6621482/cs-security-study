@@ -49,7 +49,7 @@
     - 현재 위치 : `/home/theori`
       - report.txt : `documents/report.txt`
     - 현재 위치 : `/home/theori/downloads`
-      - report.txt : ../documents/report.txt
+      - report.txt : `../documents/report.txt`
 
 ### Path Traversal 
 - **Path Traversal** : 권한 없는 경로에 프로세스가 접근할 수 있는 취약점
