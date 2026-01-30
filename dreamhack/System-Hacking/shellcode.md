@@ -57,3 +57,20 @@
   int main() { run_sh(); }
   ```
   - 이 코드를 컴파일하고 실행하면 프롬프트가 `sh$`로 바뀜 (쉘 획득 성공) 
+
+### shellcraft
+사용 시 반드시 코드 상단에 아키텍처 설정할 것  
+- 파일 읽기 및 쓰기
+  - `shellcraft.open(path)` : 파일 열기
+    - 성공 시 파일 디스크립터(fd)가 `rax`에 저장됨
+  - `shellcraft.read(fd, buf, len)` : 특정 fd에서 데이터를 읽어 buf에 저장
+    - `shellcraft.read('rax', 'rsp', 0x30)` : 방금 연 파일(rax)로부터 0x30 (48바이트)만큼 데이터를 읽어와서 현재 스택 포인터 위치인 rsp 주소에 저장
+  - `shellcraft.write(fd, buf, len)` : buf의 내용을 특정 fd(1은 화면 출력)로 출력함
+  - `shellcraft.cat(path)` : 특정 경로의 파일을 열어서 화면에 출력하는 과정을 한 번에 수행함
+- 프로세스 실행
+  - `shellcraft.sh()` : 가장 대중적인 함수로, /bin/sh를 실행하는 쉘코드를 생성함
+  - `shellcraft.execve(path, argv, envp)` : 특정 경로의 파일을 인자와 함께 실행함
+  - `shellcraft.pushstr(string)` : 문자열을 스택에 넣음
+- 시스템 제어
+  - `shellcraft.exit(code)` : 프로그램을 종료시킴
+  - `shellcraft.syscall(n, arg0, arg1, ...)` : 특정 시스템 콜 번호를 직접 호출할 때 사용함 
