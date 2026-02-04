@@ -14,3 +14,16 @@
     - `http://same-origin.com/frame.html` : cross origin (프로토콜이 다름)
     - `https://cross.same-origin.com/...` : cross origin (호스트가 다름)
     - `https://same-origin.com:1234/` : cross origin (포트가 다름)
+
+### 실습 
+- `window.open(<경로>)` : 새로운 창을 띄우는 함수
+- `<object>.location.href` : 객체가 가리키고 있는 URL 주소를 읽어옴
+
+## Cross-Origin Resource Sharing (CORS)
+- 웹 서비스의 기능 구현을 위해 다른 origin의 리소스를 사용해야 하는 경우가 있음
+- 특정 조건 하에서 제한을 완화해줌
+- 허용 되는 예외 태그
+  - `<img>` : 다른 사이트의 이미지를 표시할 수 있음
+  - `<style>` : 외부 CSS 파일을 적용할 수 있음
+  - `<script>` : 외부 자바 스크립트 파일을 실행할 수 있음
+  - 
