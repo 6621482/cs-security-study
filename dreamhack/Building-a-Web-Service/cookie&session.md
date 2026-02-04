@@ -48,4 +48,4 @@
   - 클라이언트
     - 저장 위치 : 브라우저 쿠키(Cookie Storage)
     - 저장 내용 : 서버의 데이터를 조회하기 위한 Session ID (Key)
-
+- 세션 하이재킹(Session Hijacking) : 공격자가 타인의 유효한 Session ID를 가로채서 해당 사용자의 권한으로 서버에 접속하는 공격 기법
