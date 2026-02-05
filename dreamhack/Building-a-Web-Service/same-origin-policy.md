@@ -102,7 +102,7 @@
     </script>
 
     <script src="http://theori.io/whoami?callback=myCallback"></script>  // 데이터를 myCallback(...) 형태로 감싸서 보내달라는 의미 
-    ```js 
+    ```
   - (2) 서버 (데이터 감싸기)
     - 요청받은 데이터를 JSON 형태로 준비함
     - 전달받은 콜백 함수 이름으로 JSON 데이터를 감싸서 응답함
