@@ -55,7 +55,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My First Page</title>
+  <title>My First Page</title> 
 </head>
 <body>
   <h1>Welcome to HTML!</h1>
@@ -70,5 +70,7 @@
   - 모든 HTML 문서는 `<html>` 태그를 포함해야 함
 - `<head>` : HTML 문서의 메타데이터를 작성하는 부분 (HTML5 생략할 수 있음)
   - 메타데이터 : 데이터에 대한 데이터 (데이터의 특성, 구조, 용도 등 추가적인 정보를 제공하는 데이터)
+- `<title>` : 웹 페이지에 보이는 제목을 정의하는 태그 
+  - `<head>` 내에 존재해야 함
 - `<body>` : HTML의 본문을 정의하는 부분
   - 모든 HTML 문서는 `<body>` 태그를 포함해야 함
