@@ -35,7 +35,7 @@ flask-app
 - flask-app/templates : HTML 문서들을 담는 디렉토리 (별도로 Flask 프레임워크에서 설정하지 않는 이상 반드시 templates라는 이름으로 존재해야 하는 디렉토리)
 - flask-app/templates/simple_page.html : HTML 문서 파일
 
-- `$ python3 app.py' : app.py를 python으로 실행하면 Flask 웹 서버가 구동됨
+- `$ python3 app.py` : app.py를 python으로 실행하면 Flask 웹 서버가 구동됨
   - `Running On all addresses (0.0.0.0)` : Flask 서버가 모든 공인 IP로부터 요청을 받아들인다는 의미
     - 이 문구가 뜨면 다른 외부 네트워크의 이용자가 본 웹 서버로 접속할 수 있음
     - `0.0.0.0` : 네트워크 상의 모든 IOv4 주소 
