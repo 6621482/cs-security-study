@@ -311,4 +311,96 @@ if __name__ == '__main__':
   - 주요 용도 : 검색, 필터링, 정렬 등
 
 ### `<form>` 태그를 통한 POST 데이터 입력 처리 
-- 
+- `<form>` 태그 : 이용자가 웹 브라우저 상에서 데이터를 입력한 후 **서버로 전송할 수 있는 양식(Form)** 을 만듦
+- `<form>` 태그의 핵심 속성
+  - `action` : 입력할 값을 전송할 URL을 지정함
+  - `method` : 입력 값을 전송할 때 사용하는 HTTP 메세지의 메서드를 설정 (주로 GET, POST 사용)
+#### `<form>` 입력 요소 태그
+- `<input>` : 입력 양식을 만드는 태그
+  - `<form>` 태그 단독으로는 입력 양식을 만들 수 없고, `<input>`태그를 함께 사용해야 입력 가능한 폼을 만들 수 있음
+  - `<input>` 태그에서 자주 사용되는 속성
+    - `type` : 입력 필드의 유형을 지정함
+      - 유형 : `text` (텍스트를 입력받는 폼) / `number` (숫자만 입력받는 폼) / `password` (비밀번호를 입력받는 폼이어서 입력 값이 별표 기호로 표시되는 폼)
+    - `name` : 서버로 전송될 때, 데이터의 키(Key)를 설정함
+      - `<form>` 태그를 통해 서버로 전달되는 데이터는 키-값 쌍 형태로 전달됨
+      - name 속성이 어떤 키로 전달될지를 설정함
+    - `id` : 입력 폼의 고유 식별자
+- `<button>` : HTML에서 클릭 가능한 버튼을 생성하는 데 사용하는 태그
+
+##### `<form>` 태그 예시 - 텍스트 입력 폼 
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Exercise</title>
+</head>
+<body>
+  <h1>Form Exercise</h1>
+  <form action="/submit" method="post">
+    Name:
+    <input type="text" id="username" name="username">
+    <button>Submit</button>
+  </form>
+</body>
+</html>
+```
+- `<form action="/submit" method="post">` : 제출한 데이터는 `/submit` 경로로 POST 메서드를 통해 전달됨
+- `<input type="text" id="username" name="username">` : 텍스트를 입력할 수 있는 입력 양식, 입력값은 서버에 전달될 때 `username=입력값` 형태로 전달됨
+- <button>Submit</button> : submit 버튼 생성
+
+##### `<form>` 입력 요소 태그 예시 - 비밀번호 입력 폼 
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Exercise</title>
+</head>
+<body>
+  <h1>Form Exercise</h1>
+  <form action="/login" method="post">
+    Username:
+    <input type="text" id="userid" name="userid">
+    <br>
+    Password:
+    <input type="password" id="userpw" name="userpw">
+    <button>Log In</button>
+  </form>
+</body>
+</html>
+```
+- `<form action="/login" method="post">` : 제출한 데이터는 `/login` 경로로 POST 메서드를 통해 전달됨
+- `<br>` : 줄바꿈
+
+##### `<form>` 입력 요소 태그 예시 - 파일 업로드 폼 
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Exercise</title>
+</head>
+<body>
+  <h1>Form Exercise</h1>
+  <form action="/upload" method="post">
+    Choose a file:
+    <input type="file" id="file" name="file">
+    <button>Upload</button>
+  </form>
+</body>
+</html>
+```
+
+#### 세 가지 방법 비교
+| 구분 | URL 경로 매개변수 | URL 쿼리 매개변수 | `<form>` POST 데이터 |
+|------|------------------|------------------|----------------------|
+| 전달 형태 | URL 경로의 일부 (예: `/products/123`) | URL 끝에 `?key=value` 형태 | HTML 양식을 통해 서버로 전송 |
+| Flask 추출법 | 함수 인자로 직접 전달받음 | `request.args.get()` 사용 | `request.form` 등을 통해 추출 (Body 데이터) |
+| 주요 속성 | `< >`를 이용한 변수 정의 | 별도 정의 없이 호출 가능 | `action`(대상), `method`(방식) 설정 필요 |
+| 주요 용도 | 특정 리소스 식별 (상품 ID 등) | 검색, 필터링, 간단한 옵션 전달 | 로그인, 게시글 작성 등 보안/대용량 데이터 |
+- URL 경로 및 쿼리 매개변수: 데이터가 URL 부분에 포함되어 전송됨 -> 브라우저 주소창에 데이터가 그대로 노출됨
+- <form> 태그 (POST 방식): 데이터가 HTTP 메시지의 바디(Body) 부분에 포함되어 전송됨 -> 주소창에 데이터가 드러나지 않음 
+
+### `<form>` 태그를 통한 POST 데이터 입력 처리 - 서버에서 처리하기 
+- `<form>` 태그로 전달받은 POST 데이터는 `request.form` 객체에 전달됨
+- `request.form` 객체의 `.get()` 메서드를 사용하면 전달받은 데이터를 가져올 수 있음
+  - ex. 전달받은 데이터 중 키가 username인 데이터를 사용하려면? `request.form.get('username')`으로 가져올 수 있음
+
