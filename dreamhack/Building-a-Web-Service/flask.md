@@ -87,11 +87,11 @@ if __name__ == '__main__':
 - **HTML 템플릿** : 뼈대인 HTML 코드 (코드 안에 실제 데이터가 채워지기 전, 기본적인 뼈대만 갖춘 상태의 HTML 문서)
 - **최종 HTML 문서** : HTML 템플릿에 실제 데이터가 채워져서 최종적으로 완성된 HTML 문서
 
-### 템플릿 렌더링 기호 
+## 템플릿 렌더링 기호 
 - `render_template()` : HTML 템플릿에 존재하는 특수한 기호들을 규칙에 맞춰 렌더링해줌
 - Flask는 내부적으로 Jinja2라는 템플릿 엔진을 사용함
 
-#### {{ 표현식 }}
+### {{ 표현식 }}
 - HTML 문서 안에 이 기호를 사용하면, Python 코드에서 전달받은 데이터나 간단한 연산 결과를 그 자리에 직접 삽입(출력)할 수 있음
   
 - <app.py>
@@ -138,10 +138,10 @@ if __name__ == '__main__':
 - 출력 : HTML에서는 {{ }}를 사용하여 Python의 변수나 연산 결과를 가져옴
 - 결과 확인 : 브라우저는 템플릿 기호가 모두 해석된 최종 HTML만 전달받아 화면에 출력함
 
-#### {% 구문 %}
+### {% 구문 %}
 - 프로그램의 로직(조건, 반복, 상속 등)을 제어하기 위해 사용되는 기호
 
-##### 조건문 
+#### 조건문 
 - 데이터의 참/거짓 여부에 따라 HTML 문서에 데이터를 다르게 삽입할 때 사용함
 - 반드시 **{% endif %}** 로 끝나야 함  
 1. if문
@@ -169,7 +169,7 @@ if __name__ == '__main__':
    {% endif %}
    ```
 
-##### 반복문 
+#### 반복문 
 - 서버 Python 코드에서 전달된 리스트, 딕셔너리와 같은 데이터를 순회하면서 HTML 콘텐츠를 동적으로 생성할 수 있음
 ```
 <ul>
@@ -183,7 +183,7 @@ if __name__ == '__main__':
 - `<li>` : 목록의 한 항목을 나타내는 태그(list item) -> 자동으로 들여쓰기 + 점 (또는 번호)을 붙여줌 
 - `{% endfor %}` : 반복문의 끝
 
-##### 템플릿 상속 구문 
+#### 템플릿 상속 구문 
 - 여러 HTML 파일 간에 공통 템플릿을 공유하고 재사용할 수 있도록 돕는 기능
 - 부모 템플릿과 자식 템플릿이 필요함
 ```
@@ -197,3 +197,118 @@ if __name__ == '__main__':
 ```
 - 자식 템플릿에서 사용할 수 있음
 - 부모 템프릿을 상속함 
+
+### {# 주석 #}
+- 최종 결과물에 출력되지 않는 주석이나 참고 정보를 작성할 때 사용됨
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flask 템플릿</title>
+  {# 이곳은 사용자에게 표시되지 않는 주석입니다. #}
+</head>
+<body>
+  <h1>템플릿 주석 예제</h1>
+
+  {# 이곳도 사용자에게 표시되지 않는 주석입니다. #}
+  <p>이 문장은 사용자에게 표시됩니다.</p>
+</body>
+</html>
+```
+- `<!--이것은 주석입니다.-->` : HTML에서 제공하는 주석
+  - 브라우저의 웹 페이지 화면에는 안 보이지만 HTML 소스 코드에는 그대로 노출이 되는 정보임
+- `{# 주석 #}` : 렌더링 과정에서 제거되기 때문에 최종 HTML 소스 코드에 노출되지 않음
+
+## 이용자로부터 입력받기 
+### URL 경로 매개변수를 통한 입력 처리 
+- **URL 경로 매개변수(URL Path Parameter)** : 데이터를 URL 경로의 일부로 포함시켜 서버에 전달하는 방식
+- URL 내부의 특정 위치가 변수(인자값) 역할을 함
+- 사용자가 URL의 해당 위치에 다른 값을 입력하면, 서버는 그 값을 받아 서로 다른 데이터를 조회하거나 처리함
+- 예시 : `https://example.com/products/123`
+  - `/products` : 상품 목록을 나타내는 고정된 경로
+  - `123` : 특정 상품의 ID를 나타내는 매개변수
+  - 123 대신 40을 넣으면, 서버는 상품 ID가 40인 상품 정보를 찾아 화면에 보여줌
+- 예시 : 경로 매개변수로 이름을 전달받아서 웹 페이지에 `Hello, {{ 이름 }}!` 형태로 출력하기
+  <app.py>
+  ```
+  from flask import Flask, render_template
+
+  app = Flask(__name__)
+
+  @app.route('/welcome/<name>')
+  def get_welcome_name(name):
+      return render_template('result.html', name=name)
+
+  if __name__ == '__main__':
+      app.run(host='0.0.0.0', port=31337)
+  ```
+  - 변수 정의 : `@app.route` 데코레이터에서 경로 매개변수로 사용할 부분을 `<`와 `>`로 감사면 경로 매개변수로 정의할 수 있음 
+  - 함수 인자로 받기 : 정의된 <name>을 해당 경로와 연결된 함수(get_welcome_name)의 인자로 넣어야 함수 내부 코드에서 사용할수 있음
+  - 템플릿으로 전달 : `render_template('result.html', name=name)`을 통해 사용자로부터 받은 name 값을 HTML 파일로 넘겨줌
+  
+   <templates/result.html>
+  ```
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>URL Path Parameter Example</title>
+  </head>
+  <body>
+    <h1>URL Path Parameter Example</h1>
+    <h2>Hello, {{ name }}!</h2>
+  </body>
+  </html>
+  ```
+  - 전달받은 매개변수를 `<h2>Hello, {{ name }}!</h2>` 형태로 렌더링함 (표현식 사용) 
+  - 서버에서 전달받은 name 변수의 실제 값을 해당 위치에 삽입하여 HTML을 생성함
+- 요약
+  - URL 형태 : `/welcome/mark`
+  - Flask 추출 : 함수 인자 (name)
+  - 주요 용도 : 특정 리소스 식별 (ID 등) 
+
+### URL 쿼리 매개변수를 통한 입력 처리 
+- **URL 쿼리 매개변수(URL Query Parameter)** : URL의 `?` 뒤에 오는 매개변수로, 이용자가 데이터를 서버로 전달하는 방식 중 하나
+- 예시 : `http://example.com/search?query=flask&page=2`
+  - `?` 뒤에 오는 `query`가 매개변수 키(Key)를 나타내고, `flask`가 매개변수 값(Value)을 의미함
+  - `&`로 이어진 `page=2`는 또 다른 매개변수 키-값 쌍임
+- 예시 : 쿼리 매개변수로 이름을 전달받아 웹 페이지에 `Hello, {{ 이름 }}!` 형태로 출력하기     
+  <app.py>
+  ```
+  from flask import Flask, render_template, request
+
+  app = Flask(__name__)
+
+  @app.route('/welcome')
+  def get_welcome():
+      user_name = request.args.get('user_name')
+      return render_template('result.html', name=user_name)
+
+  if __name__ == '__main__':
+      app.run(host='0.0.0.0', port=31337)
+  ```
+  - 쿼리 매개변수를 사용하려면 `request` 클래스가 필요함 (첫 줄에서 import 해줌)
+  - `request.args` : 이용자로부터 전달받은 쿼리 매개변수들을 담고 있는 객체
+    - `.get()` 메서드 : `user_name`이라는 매개변수를 가져와서 `user_name`이라는 변수에 대입함
+  - 렌더링 : render_template() 함수는 templates/ 폴더 내의 HTML 파일을 찾아 변수를 매핑한 뒤 최종 HTML을 생성함
+   
+  <templates/result.html>
+  ```
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>URL Query Parameter Example</title>
+  </head>
+  <body>
+    <h1>URL Query Parameter Example</h1>
+    <h2>Hello, {{ name }}!</h2>
+  </body>
+  </html>
+  ```
+  - 앞서 전달받은 경로 매개변수를 `<h2>Hello, {{ name }}!</h2>` 형태로 렌더링함
+- 요약
+  - URL 형태 : `/welcome?user_name=yewon`
+  - Flask 추출 : `request.args.get('key')`
+  - 주요 용도 : 검색, 필터링, 정렬 등
+
+### `<form>` 태그를 통한 POST 데이터 입력 처리 
+- 
