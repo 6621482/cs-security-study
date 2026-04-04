@@ -41,8 +41,72 @@
       afl->queue_cur->perf_score = orig_perf = perf_score = calculate_score(afl, afl->queue_cur);
     ```
 
-- havoc stage 존재 
+- **deterministic** 단계 존재
+  - deterministic mutation 단계의 비용이 크기 때문에, 모든 시드에 대해 이를 수행하지 않음
+  - skip 하는 경우
+    - skip_deterministic 플래그가 켜진 경우
+    - 현재 시드가 이미 deterministic testing을 마친 경우(passed_det)
+    - quick effective bytes 정보상 deterministic mutation의 효율이 낮다고 판단되는 경우
+    - 현재 시드의 perf_score가 낮아 투자 가치가 작다고 판단되는 경우
+  -->  deterministic stage를 무조건 수행하는 대신, 유망한 시드에만 자원을 집중하도록 최적화함 (AFL에 비해 스킵 조건이 조금 더 많음) 
+  
+- **havoc stage** 존재
+  - 다양한 mutation operator를 무작위로 적용하며, 반복 횟수(stage_max)는 현재 시드의 perf_score에 따라 조정됨
+  - 따라서 더 유망한 시드는 더 많은 mutation 기회를 받음 
 
+- **splicing stage** 존재
+  - 역할 : 새 path 발견이 잘 안 될 때 사용하는 fallback 전략
+  - 조건
+    ```
+    if (afl->use_splicing && splice_cycle++ < SPLICE_CYCLES &&
+    afl->ready_for_splicing_count > 1 && afl->queue_cur->len >= 4)
+    ```
+    - `afl->use_splicing` : splicing 기능이 켜져 있어야 함
+    - `splice_cycle++ < SPLICE_CYCLES` : splice를 너무 무한정 반복하지 않음
+    - `afl->ready_for_splicing_count > 1` : 섞을 만한 다른 시드가 최소 1개는 있어야 함
+    - `afl->queue_cur->len >= 4` : 현재 입력이 너무 짧으면 splice 의미가 없음  
+  --> 제한된 조건에서만 실행됨
+  - 다른 queue entry 하나 고르기
+    ```
+    do {
+      tid = rand_below(afl, afl->queued_items);
+    } while (
+      unlikely(tid == afl->current_entry || afl->queue_buf[tid]->len < 4));
+    ```
+    - queue 안에서 랜덤하게 다른 시드 하나 뽑음
+  - 두 입력이 어디서 다른지 찾음
+    ```
+    locate_diffs(in_buf, new_buf, MIN(len, (s64)target->len), &f_diff, &l_diff);
+    ```
+    - 현재 입력과 선택된 다른 입력을 비교해서 처음으로 다른 위치, 마지막으로 다른위치를 찾음 (두 입력이 실제로 다른 구간의 범위를 찾음)
+  - 차이가 너무 작으면 다시 시도
+    ```
+    if (f_diff < 0 || l_diff < 2 || f_diff == l_diff) { goto retry_splicing; }
+    ```
+  - 자를 위치 결정
+    ```
+    split_at = f_diff + rand_below(afl, l_diff - f_diff);
+    ```
+    - 처음 다른 바이트와 마지막 다른 바이트 사이 어딘가를 랜덤하게 골라서 거기를 splice 경계로 삼음
+  - 실제로 두 입력을 섞음
+    ```
+    memcpy(afl->in_scratch_buf, in_buf, split_at);
+    memcpy(afl->in_scratch_buf + split_at, new_buf + split_at, len - split_at);
+    ```
+  - 새 버퍼를 현재 입력으로 교체
+    ```
+    in_buf = afl->in_scratch_buf;
+    ...
+    memcpy(out_buf, in_buf, len);
+    ```
+    - 방금 splice해서 만든 입력을 이제 다음 mutation의 기준 입력으로 사용함
+  - 어디로 감?
+    ```
+    goto custom_mutator_stage;
+    ```
+    - splice가 끝났다고 바로 실행하는 게 아니라, 이 결과물을 다음 mutation 단계로 넘김
+
+  --> splice → custom mutator stage → (이후) havoc 계열 변형 → 실행
 
 
 
