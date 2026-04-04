@@ -1,7 +1,7 @@
 # AFL++
 
 ## AFL++ 코드 분석 
-1. `src/afl-fuzz.c`   
+### `src/afl-fuzz.c`   
 - 역할 : 퍼저 전체 시작점 (main 함수 존재)
 - 기능
   - 퍼징 환경 설정 및 초기화 (`afl_state_init()`, `afl_fsrv_init()` 등의 초기화 함수 존재)
@@ -11,7 +11,7 @@
   - 핵심 퍼징 세부 로직은 다른 파일로 분리되어 있음
   - 이 파일은 전체 제어 중심에 가깝고, 세부 mutation, queue, trim 구현의 중심 파일은 아님  
 
-2. `src/afl-fuzz-one.c`
+### `src/afl-fuzz-one.c`
 - 역할 : 한 개의 시드에 대해 실제 퍼징 수행
 - **Calibration** 단계 존재
   - queue_cur의 cal_failed 상태를 보고 calibrate_case() 재호출
@@ -108,7 +108,33 @@
 
   --> splice → custom mutator stage → (이후) havoc 계열 변형 → 실행
 
+### `src/afl-fuzz-queue.c`
+- `select_next_queue_entry` : 다음 시드 선택
+  ```
+  u32 s = rand_below(afl, afl->queued_items);
+  double p = rand_next_percent(afl);
 
+  return (p < afl->alias_probability[s] ? s : afl->alias_table[s]);
+  ```
+  - 먼저 s라는 인덱스를 랜덤하게 하나 뽑고, 확률 값 p도 뽑음
+  - `alias_probability[s]`보다 작으면 s를 그대로 선택하고, 아니면 `alias_table[s]`에 저장된 다른 인덱스를 선택함
+  - `queue_cur = queue_cur->next`처럼 순차적으로 다음 시드를 고르지 않고, alias table 기반 weighted random selection을 사용
+
+- `create_alias_table()` : weighted random selection을 만듦
+  - 각 시드의 weight를 계산하고, 이를 바탕으로 alias_table, alias_probability를 만들어서 나중에 select_next_queue()가 빠르게 다음 seed를 뽑도록 준비함
+
+- `calculate_score()`
+  - avg_exec_us, avg_bitmap_size, schedule, 실행 시간(exec_us), coverage 관련 정보 등을 반영해서 점수를 조정
+  - 시드가 얼마나 유망한지를 반영
+ 
+- `cull_queue` : favored seed를 고름
+
+- **AFL** : 순차적으로 queue를 순회하면서, favored 여부나 skip 조건으로 가중을 주는 구조
+- **AFL++** : 순차 순회 중심 구조에서, score 기반 weighted random selection 구조로 확장
+  - `cull_queue()`로 favored 시드를 다시 정리
+  - `calculate_score()로` 각 시드의 perf_score를 계산
+  - `create_alias_table()`로 weighted random selection용 테이블 생성
+  - `select_next_queue_entry()`로 실제 다음 시드를 확률적으로 선택
 
 ### trim_case() 함수 구현 차이
 1. trim_case()의 목적
