@@ -1,4 +1,5 @@
 # AFL++
+`/src`를 중심으로 봄   
 
 ## AFL++ 코드 분석 
 ### `src/afl-fuzz.c`   
@@ -127,7 +128,7 @@
   - avg_exec_us, avg_bitmap_size, schedule, 실행 시간(exec_us), coverage 관련 정보 등을 반영해서 점수를 조정
   - 시드가 얼마나 유망한지를 반영
  
-- `cull_queue` : favored seed를 고름
+- `cull_queue()` : favored seed를 고름
 
 - **AFL** : 순차적으로 queue를 순회하면서, favored 여부나 skip 조건으로 가중을 주는 구조
 - **AFL++** : 순차 순회 중심 구조에서, score 기반 weighted random selection 구조로 확장
@@ -204,4 +205,29 @@ if (cksum == q->exec_cksum) {
   - 상황에 따라 trimming 비활성화 가능
   - AFL은 단순 조건 / AFL++는 다양한 실행 조건 존재
 
+### 파일 구조 정리 
+- afl-fuzz.c → 전체 흐름 제어
+- afl-fuzz-one.c → seed 단위 fuzzing
+- afl-fuzz-run.c → 실행 엔진
+- afl-fuzz-queue.c → seed 선택
+- afl-fuzz-state.c → 상태 관리
 
+--> AFL : 대부분 로직이 afl-fuzz.c 하나에 집중됨 / AFL++ : 기능별로 파일이 분리됨 (modularization) 
+
+```text
+[afl-fuzz.c]  (main)
+      ↓
+[afl-fuzz-init.c] (초기화)
+      ↓
+LOOP
+  ↓
+[select_next_queue_entry()]  ← afl-fuzz-queue.c
+      ↓
+[fuzz_one()]                 ← afl-fuzz-one.c
+      ↓
+[fuzz_run_target()]          ← afl-fuzz-run.c
+      ↓
+[update queue / coverage]
+      ↓
+(반복)
+```
