@@ -91,15 +91,9 @@ void cull_queue(afl_state_t *afl) {
 - `perf_score` : 시드 구조체의 멤버 변수로 저장 
   - perf_score 형성 자체는 비선형적
   - 지수, 로그 등의 계산이 들어감
-- `perf_score`를 바탕으로 `alias table`에서 해당 시드가 선택될 확률은 선형적임
-  ```
-  ``` 
+- `perf_score`를 바탕으로 `alias table`에서 해당 시드가 선택될 확률은 선형적임 
   - ex. 시드 A의 perf_score : 200 / 시드 B의 perf_score = 100 --> alias probablity에서 시드 A가 선택될 확률은 시드 B의 2배
   
-
-
-
-
 ## 3. trim_case_custom()
 - `trim_case_custom()`의 defalut : 기존 AFL 함수의 `trim_case()`와 동일함
 - 근데 가장 큰 차이점 : trim을 거친 결과물이 원본보다 크기가 커져도 허용함 (AFL은 파일 크기 줄이는 것이 목표)
