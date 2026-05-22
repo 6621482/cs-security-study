@@ -1,1 +1,1 @@
-This directory contains study notes and practical exercises on assembly language, computer architecture, and GDB debugging.
+Notes and exercises on assembly, Linux memory layout, and GDB for system security fundamentals.
